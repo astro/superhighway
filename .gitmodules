@@ -1,0 +1,3 @@
+[submodule "strophejs"]
+	path = strophejs
+	url = git://code.stanziq.com/strophejs
