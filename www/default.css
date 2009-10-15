@@ -39,6 +39,7 @@ h1 {
 }
 
 .entry { 
+  clear: both;
   width: auto;
   margin: 0.1em 0;
   padding: 0.2em 1em;
@@ -46,6 +47,11 @@ h1 {
   color: black;
 }
 .entry .title { 
+}
+.entry .title img { 
+  margin: 2px;
+  max-height: 1.5em;
+  float: left;
 }
 .entry .meta { 
   font-size: 70%;

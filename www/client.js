@@ -82,18 +82,39 @@ function onEntry(feed_url, e) {
 
     serial++;
     var entry_id = "entry" + serial;
-    $('#content').prepend('<div id="' + entry_id + '" class="entry"></div>');
-    var entry = $('#'+entry_id)
-    entry.hide();
-    entry.slideDown(700);
-    entry.append('<p class="title"></p>').text(title);
+    $('#content').prepend(
+	$('<div/>')
+	.hide()
+	.addClass('entry')
+	.attr('id', entry_id)
+	.append(
+	    $('<p/>')
+	    .addClass('title')
+	    .text(title)
+	)
+	.append(
+	    $('<p/>')
+	    .addClass('meta')
+	)
+	.slideDown(700)
+    );
 
-    entry.append('<p class="meta"></p>');
     var meta = $('#'+entry_id+' p.meta');
     e.find("link").map(function() {
 	var link = $(this).attr("href");
-	meta.append('<a></a>');
-	meta.find('a:last').attr("href", link).text(link);
+	var rel = $(this).attr("rel");
+	if (rel == 'alternate') {
+	    meta.append(
+		$('<a/>')
+		.attr('href', link)
+		.text(link)
+	    );
+	} else {
+	    $('#'+entry_id+' p.title').prepend(
+		$('<img/>')
+		.attr('src', link)
+	    );
+	}
     });
 }
 
