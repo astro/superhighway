@@ -1,1 +1,52 @@
-Hello World
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Notification Superhighway</title>
+  <script type='text/javascript'
+	  src='http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js'></script>
+  <script type='text/javascript'
+	  src='strophe.js'></script>
+  <script type='text/javascript'
+	  src='client.js'></script>
+  <link rel='stylesheet' title='Default' type='text/css' href='default.css' />
+</head>
+<body>
+  <div id="control">
+    <a title="Subscribe to a feed..."
+       id="subscribe">+</a>
+    <a title="Disconnect &amp; relogin"
+       id="disconnect">×</a>
+  </div>
+  <h1>Notification Superhighway</h1>
+  <div id='login' style='text-align: center'>
+    <form name='cred'>
+      <div>
+	<label for='jid'>JID:</label>
+	<input type='text' id='jid' value='@superfeedr.com'/>
+      </div>
+      <div>
+	<label for='pass'>Password:</label>
+	<input type='password' id='pass' />
+      </div>
+      <div>
+	<input type='button' id='connect' value='connect' />
+      </div>
+    </form>
+  </div>
+  <div id='content'>
+    <div class='entry'>
+      <p class='title'>Foo bar baz</p>
+      <p class='meta'>
+	<a class="link" href="foo">http://...</a>
+	<span class="time">23 seconds ago</span>
+	<a class="unsubscribe"
+	   title="Unsubscribe from this feed">×</a>
+      </p>
+    </div>
+  </div>
+  <hr />
+  <div class='font-size: small; font-family: monospace;' id='log'></div>
+</body>
+</html>
+

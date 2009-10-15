@@ -1,0 +1,69 @@
+body { 
+  background-color: #333;
+  color: #ccc;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+body * { 
+  text-align: left;
+  margin: 0 auto;
+}
+
+#control { 
+  float: right;
+  text-align: right;
+  margin-right: 0;
+}
+#control a { 
+  color: #999;
+}
+#control a:hover { 
+  cursor: pointer;
+  color: white;
+}
+
+h1 { 
+  text-align: center;
+  margin: 0;
+  padding: 0.2em 0;
+  width: 100%;
+  background-color: black;
+}
+
+#login { 
+  max-width: 30em;
+  padding: 2em;
+  background-color: black;
+}
+
+.entry { 
+  width: auto;
+  margin: 0.1em 0;
+  padding: 0.2em 1em;
+  background-color: #7fff7f;
+  color: black;
+}
+.entry .title { 
+}
+.entry .meta { 
+  font-size: 70%;
+}
+.entry p a { 
+  margin-right: 1em;
+  color: black;
+}
+.entry p a:hover { 
+  color: white;
+}
+.entry p .time { 
+  color: #666;
+  padding: 0 2em;
+  font-size: 60%;
+}
+
+#log { 
+  font-size: small;
+  font-family: monospace;
+}
