@@ -37,13 +37,6 @@ function onOffline() {
     $('#login').slideDown(500);
 }
 
-function foreachChild(el, name, fun) {
-    var children = el.getElementsByTagName(name);
-    for(var i = 0; i < children.length; i++) {
-	fun(children[i]);
-    }
-}
-
 function onMessage(msg) {
     log("!!! message");
     $(msg).find("event items").map(function() {
@@ -60,17 +53,6 @@ function onMessage(msg) {
 	    }
 	});
     });
-    /*foreachChild(msg, "event", function(event) {
-	foreachChild(event, "items", function(items) {
-	    var feed = items.getAttribute("node");
-	    foreachChild(items, "item", function(item) {
-		foreachChild(item, "entry", function(entry) {
-		    log("entry: " + entry);
-		    onEntry(feed, entry);
-		});
-	    });
-	});
-    });*/
 
     return true;
 }
