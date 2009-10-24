@@ -44,6 +44,7 @@ function onMessage(msg) {
     $(msg).find("event items").map(function() {
 	var items = $(this);
 	var feed_url = items.attr("node");
+	log("Items from: " + feed_url);
 	items.find("item entry").map(function() {
 	    var entry = $(this);
 	    try {
@@ -99,6 +100,30 @@ function onEntry(feed_url, e) {
     });
 }
 
+function addFeed(url) {
+    $('#addform').hide();
+
+    // Almost entirely stolen from the superfeedr.com dashboard
+    var id = connection.getUniqueId("");
+    var iq = $iq({"to": "firehoser.superfeedr.com",
+		  "type": "set",
+		  "id": id})
+	.c("pubsub", {"xmlns": "http://jabber.org/protocol/pubsub",
+		      "xmlns:superfeedr":"http://superfeedr.com/xmpp-pubsub-ext"})
+	.c("subscribe", {"node": Strophe.xmlescape(url),
+			 "jid": connection.jid});
+    connection.addHandler(function (iq) {
+	var type = iq.attributes.getNamedItem("type").nodeValue;
+	if (type == "results")
+	    log("Subscribed to " + feed_url);
+	else if (type == "error")
+	    log("Error adding " + feed_url);
+	else
+	    return true;
+    }, null, null, null, id,  "firehoser.superfeedr.com");
+    connection.send(iq.tree());
+}
+
 $(document).ready(function () {
     connection = new Strophe.Connection(BOSH_SERVICE);
     connection.addHandler(onMessage, null, 'message', null, null,  null); 
@@ -119,5 +144,17 @@ $(document).ready(function () {
     $('#disconnect').bind('click', function () {
 	connection.disconnect();
     });
+
+    $('#addform').hide();
+    $('#add').bind('click', function () {
+	$('#addform').show();
+    });
+    $('#addcancel').bind('click', function () {
+	$('#addform').hide();
+    });
+    $('#feed_add').bind('click', function () {
+	addFeed($('#feed_url').get(0).value);
+    });
+
     onOffline();
 });

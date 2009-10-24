@@ -14,12 +14,12 @@
 <body>
   <div id="control">
     <a title="Subscribe to a feed..."
-       id="subscribe">+</a>
+       id="add">+</a>
     <a title="Disconnect &amp; relogin"
        id="disconnect">×</a>
   </div>
   <h1>Notification Superhighway</h1>
-  <div id='login' style='text-align: center'>
+  <div id='login'>
     <form name='cred'>
       <div>
 	<label for='jid'>JID:</label>
@@ -31,6 +31,35 @@
       </div>
       <div>
 	<input type='button' id='connect' value='connect' />
+      </div>
+    </form>
+  </div>
+  <div id='addform'>
+    <form>
+      <div>
+	<label>Feed:</label>
+	<input type='text' id='feed_url' title='URL of ATOM/RSS feed'/>
+	<input type='button' id='feed_add' value='Add'/>
+      </div>
+      <!--
+      <div>
+	<label>Twitter user:</label>
+	<input type='text' title='Username'/>
+	<input type='button' value='Add'/>
+      </div>
+      <div>
+	<label>identi.ca user:</label>
+	<input type='text' title='Username'/>
+	<input type='button' value='Add'/>
+      </div>
+      <div>
+	<label>Twitter/identi.ca search:</label>
+	<input type='text' title='Search word'/>
+	<input type='button' value='Add'/>
+      </div>
+      -->
+      <div>
+	<input type='button' id='addcancel' value='Cancel'/>
       </div>
     </form>
   </div>
