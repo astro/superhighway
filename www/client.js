@@ -192,6 +192,20 @@ $(document).ready(function () {
     $('#feed_add').bind('click', function () {
 	addFeed($('#feed_url').get(0).value);
     });
+    $('#twitter_add').bind('click', function () {
+	addFeed('http://twitter.com/statuses/user_timeline/' +
+		$('#twitter_user').get(0).value + '.rss');
+    });
+    $('#identica_add').bind('click', function () {
+	addFeed('http://identi.ca/api/statuses/user_timeline/' +
+		$('#identica_user').get(0).value + '.atom');
+    });
+    $('#search_add').bind('click', function () {
+	addFeed('http://search.twitter.com/search.atom?q=' +
+		$('#search_text').get(0).value);
+	addFeed('https://identi.ca/api/statusnet/tags/timeline/' +
+		$('#search_text').get(0).value + '.atom');
+    });
 
     onOffline();
 });
