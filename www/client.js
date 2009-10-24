@@ -66,19 +66,19 @@ function onEntry(feed_url, e) {
     var entry_id = "entry" + serial;
     $('#content').prepend(
 	$('<div/>')
-	.hide()
-	.addClass('entry')
-	.attr('id', entry_id)
-	.append(
-	    $('<p/>')
-	    .addClass('title')
-	    .text(title)
-	)
-	.append(
-	    $('<p/>')
-	    .addClass('meta')
-	)
-	.slideDown(700)
+	    .hide()
+	    .addClass('entry')
+	    .attr('id', entry_id)
+	    .append(
+		$('<p/>')
+		    .addClass('title')
+		    .text(title)
+	    )
+	    .append(
+		$('<p/>')
+		    .addClass('meta')
+	    )
+	    .slideDown(700)
     );
 
     var meta = $('#'+entry_id+' p.meta');
@@ -88,13 +88,13 @@ function onEntry(feed_url, e) {
 	if (rel == 'alternate') {
 	    meta.append(
 		$('<a/>')
-		.attr('href', link)
-		.text(link)
+		    .attr('href', link)
+		    .text(link)
 	    );
 	} else {
 	    $('#'+entry_id+' p.title').prepend(
 		$('<img/>')
-		.attr('src', link)
+		    .attr('src', link)
 	    );
 	}
     });
