@@ -69,7 +69,11 @@ h1 {
   font-size: 60%;
 }
 
-#log { 
+.log { 
   font-size: small;
   font-family: monospace;
+}
+
+#addform { 
+  padding-bottom: 2em;
 }
