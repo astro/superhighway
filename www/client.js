@@ -52,15 +52,16 @@ function onMessage(msg) {
     $(msg).find("event items").map(function() {
 	var items = $(this);
 	var feed_url = items.attr("node");
-	log("Items from: " + feed_url);
+	// TODO: *prepend* in reverse order
 	items.find("item entry").map(function() {
 	    var entry = $(this);
 	    try {
 		onEntry(feed_url, entry);
 	    } catch (e) {
-		log("!!! onEntry error: " + e);
+		log("Script error: " + e);
 	    }
 	});
+	log("Items from: " + feed_url);
     });
 
     return true;
