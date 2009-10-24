@@ -98,6 +98,14 @@ function onEntry(feed_url, e) {
 	    );
 	}
     });
+    meta.append(
+	$('<a/>')
+	    .attr('title', "Unsubscribe from " + feed_url)
+	    .text('×')
+	    .bind('click', function () {
+		rmFeed(feed_url);
+	    })
+    );
 }
 
 function addFeed(url) {
@@ -112,15 +120,35 @@ function addFeed(url) {
 		      "xmlns:superfeedr":"http://superfeedr.com/xmpp-pubsub-ext"})
 	.c("subscribe", {"node": Strophe.xmlescape(url),
 			 "jid": connection.jid});
-    connection.addHandler(function (iq) {
-	var type = iq.attributes.getNamedItem("type").nodeValue;
-	if (type == "results")
-	    log("Subscribed to " + feed_url);
+    connection.addHandler(function (r) {
+	var type = r.getAttribute("type");
+	if (type == "result")
+	    log("Subscribed to " + url);
 	else if (type == "error")
-	    log("Error adding " + feed_url);
+	    log("Error adding " + url);
 	else
 	    return true;
-    }, null, null, null, id,  "firehoser.superfeedr.com");
+    }, null, "iq", null, id,  "firehoser.superfeedr.com");
+    connection.send(iq.tree());
+}
+
+function rmFeed(url) {
+    var id = connection.getUniqueId("");
+    var iq = $iq({"to": "firehoser.superfeedr.com",
+		  "type": "set",
+		  "id": id})
+	.c("pubsub", {"xmlns": "http://jabber.org/protocol/pubsub",
+		      "xmlns:superfeedr":"http://superfeedr.com/xmpp-pubsub-ext"})
+	.c("unsubscribe", {"node": Strophe.xmlescape(url)});
+    connection.addHandler(function (r) {
+	var type = r.getAttribute("type");
+	if (type == "result")
+	    log("Unsubscribed from " + url);
+	else if (type == "error")
+	    log("Error removing " + url);
+	else
+	    return true;
+    }, null, "iq", null, id,  "firehoser.superfeedr.com");
     connection.send(iq.tree());
 }
 
