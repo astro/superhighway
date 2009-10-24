@@ -40,7 +40,15 @@ function onOffline() {
     $('#control').hide();
 }
 
+function discardOldContent() {
+    $("#content div:gt(100)").fadeOut(3000, function () {
+	$(this).empty();
+    });
+}
+
 function onMessage(msg) {
+    discardOldContent();
+
     $(msg).find("event items").map(function() {
 	var items = $(this);
 	var feed_url = items.attr("node");
