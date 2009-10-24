@@ -3,48 +3,48 @@ var connection = null;
 
 function log(msg) 
 {
-    $('#log').append('<div></div>').append(document.createTextNode(msg));
+    $('#content').prepend(
+	$('<p/>')
+	    .addClass('log')
+	    .text(msg)
+    );
 }
 
 function onConnect(status)
 {
     if (status == Strophe.Status.CONNECTING) {
-	log('Strophe is connecting.');
+	log('Connecting...');
     } else if (status == Strophe.Status.CONNFAIL) {
-	log('Strophe failed to connect.');
-	$('#connect').get(0).value = 'connect';
+	log('Failed to connect.');
+	onOffline();
     } else if (status == Strophe.Status.DISCONNECTING) {
-	log('Strophe is disconnecting.');
+	log('Disconnecting...');
     } else if (status == Strophe.Status.DISCONNECTED) {
-	log('Strophe is disconnected.');
-	$('#connect').get(0).value = 'connect';
+	log('Disconnected.');
 	onOffline();
     } else if (status == Strophe.Status.CONNECTED) {
-	log('Strophe is connected.');
-
-	//connection.addHandler(onMessage, null, 'message', null, null,  null); 
+	log('Connected.');
 	connection.send($pres().tree());
-	log('Should have sent pres')
 	onOnline();
     }
 }
 
 function onOnline() {
     $('#login').slideUp(500);
+    $('#control').slideDown(1000);
 }
 
 function onOffline() {
+    $('#connect').get(0).value = 'connect';
     $('#login').slideDown(500);
+    $('#control').hide();
 }
 
 function onMessage(msg) {
-    log("!!! message");
     $(msg).find("event items").map(function() {
 	var items = $(this);
 	var feed_url = items.attr("node");
-	log("!!! feed_url=" + feed_url);
 	items.find("item entry").map(function() {
-	    log("!!! entry");
 	    var entry = $(this);
 	    try {
 		onEntry(feed_url, entry);
@@ -60,7 +60,6 @@ function onMessage(msg) {
 var serial = 0;
 function onEntry(feed_url, e) {
     var title = e.find("title").text();
-    log("Title: " + title);
 
     serial++;
     var entry_id = "entry" + serial;
@@ -104,12 +103,6 @@ $(document).ready(function () {
     connection = new Strophe.Connection(BOSH_SERVICE);
     connection.addHandler(onMessage, null, 'message', null, null,  null); 
 
-    //connection.rawInput = function (data) { log('RECV: ' + data); };
-    //connection.rawOutput = function (data) { log('SEND: ' + data); };
-
-    //Strophe.log = function (level, msg) { log('LOG: ' + msg); };
-
-
     $('#connect').bind('click', function () {
 	var button = $('#connect').get(0);
 	if (button.value == 'connect') {
@@ -119,11 +112,12 @@ $(document).ready(function () {
 			       $('#pass').get(0).value,
 			       onConnect);
 	} else {
-	    button.value = 'connect';
 	    connection.disconnect();
+	    onOffline();
 	}
     });
     $('#disconnect').bind('click', function () {
 	connection.disconnect();
     });
+    onOffline();
 });
