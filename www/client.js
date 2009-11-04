@@ -61,7 +61,7 @@ function onMessage(msg) {
 		log("Script error: " + e);
 	    }
 	});
-	log("Items from: " + feed_url);
+	//log("Items from: " + feed_url);
     });
 
     return true;
